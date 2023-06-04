@@ -10,6 +10,7 @@ fn test_loop() {
 
     let result = loop {
         if counter == 5 {//TODO return a value from the loop
+        return counter
         }
         counter += 1;
     }
