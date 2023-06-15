@@ -4,16 +4,16 @@
 // for how contract should work, can you help Jill and Joe write it?
 // Execute `starklings hint starknet4` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 #[contract]
 mod LizInventory {
     use starknet::ContractAddress;
     use starknet::get_caller_address;
 
+    // #[starknet::storage]
     struct Storage {
         contract_owner: ContractAddress,
         // TODO: add storage inventory, that maps product (felt252) to stock quantity (u32)
+        inventory: LegacyMap<felt252, u32>
 
     }
 
@@ -23,30 +23,34 @@ mod LizInventory {
     }
 
     #[external]
-    fn add_stock() {
-        // TODO:
+    fn add_stock(product: felt252, stock: u32) {
         // * takes product and new_stock
         // * adds new_stock to stock in inventory
         // * only owner can call this
+        assert(get_caller_address() == contract_owner::read(), 'owner must call');
+        inventory::write(product, inventory::read(product) + stock);
+
 
     }
 
     #[external]
-    fn purchase() {
-        // TODO:
+    fn purchase(product: felt252, stock: u32) {
         // * takes product and quantity
         // * subtracts quantity from stock in inventory
         // * asserting stock > quantity isn't necessary, but nice to
         //   explicitly fail first and show that the case is covered
         // * anybody can call this
+        let quantity = inventory::read(product);
+        // assert(stock > quantity, 'quantity > stock');
+        inventory::write(product, inventory::read(product) - stock);
 
     }
 
     #[view]
-    fn get_stock() {
-        // TODO:
+    fn get_stock(product: felt252) -> u32 {
         // * takes product
         // * returns product stock in inventory
+        return inventory::read(product);
 
     }
 }
