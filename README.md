@@ -14,7 +14,7 @@
 <img src="https://img.shields.io/static/v1?label=Telegram&message=Starklings Dev&color=eee&logo=telegram&style=social" />
 </a>
 
-# STARKLINGS
+# STARKLINGS Solutions
 
 ### An interactive tutorial to get you up and running with Cairo and Starknet
 
